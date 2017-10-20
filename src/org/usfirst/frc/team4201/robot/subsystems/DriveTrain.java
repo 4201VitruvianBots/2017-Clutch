@@ -115,6 +115,8 @@ public class DriveTrain extends Subsystem {
 	public void updateSmartDashboard() {
 		SmartDashboard.putBoolean("High Gear", driveTrainShifters[0].get() == Value.kForward ? true : false);
 		SmartDashboard.putBoolean("Auto Shifting", !RobotMap.manualShiftOverride);
+		SmartDashboard.putNumber("DT Left Encoder", leftMotors[0].get());
+		SmartDashboard.putNumber("DT Right Encoder", rightMotors[0].get());
 	}
 	
 	public void initDefaultCommand() {
