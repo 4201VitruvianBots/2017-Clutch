@@ -29,10 +29,7 @@ public class DriveTrain extends Subsystem {
 	};
 	RobotDrive robotDrive = new RobotDrive(leftMotors[0], leftMotors[1], rightMotors[0], rightMotors[1]);
 	
-	DoubleSolenoid[] driveTrainShifters = {
-		new DoubleSolenoid(RobotMap.PCMOne, RobotMap.driveTrainShifterLeft),
-		new DoubleSolenoid(RobotMap.PCMOne, RobotMap.driveTrainShifterRight)
-	};
+	DoubleSolenoid driveTrainShifters = new DoubleSolenoid(RobotMap.PCMOne, RobotMap.driveTrainShifterForward, RobotMap.driveTrainShifterReverse);
 	
 	double upperShiftThreshold = 12;
 	double lowerShiftThreshold = 10;
@@ -71,8 +68,8 @@ public class DriveTrain extends Subsystem {
 	public void tankDrive(Joystick leftJoystick, Joystick rightJoystick) {
 		initDriverControl();
         
-        // Set Tank Drive with cubed inputs
-    	robotDrive.tankDrive(Math.pow(leftJoystick.getAxis(AxisType.kY), 3), Math.pow(rightJoystick.getAxis(AxisType.kY), 3));
+        // Set Tank Drive with cubed inputs. I don't know why the left/right joysticks are reversed
+    	robotDrive.tankDrive(Math.pow(rightJoystick.getAxis(AxisType.kY), 3), Math.pow(leftJoystick.getAxis(AxisType.kY), 3));
 	}
 	
 	public void splitArcadeDrive(Joystick leftJoystick, Joystick rightJoystick) {
@@ -83,18 +80,15 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void setHighGear() {
-		driveTrainShifters[0].set(Value.kForward);
-		driveTrainShifters[1].set(Value.kForward);
+		driveTrainShifters.set(Value.kForward);
 	}
 	
 	public void setLowGear() {
-		driveTrainShifters[0].set(Value.kReverse);
-		driveTrainShifters[1].set(Value.kReverse);
+		driveTrainShifters.set(Value.kReverse);
 	}
 	
 	public Value getShiftStatus() {
-		// Assuming both shifters will always be in the same position
-		return driveTrainShifters[0].get();
+		return driveTrainShifters.get();
 	}
 	
 	/** This is a model, need to get values before implementing.
@@ -113,10 +107,10 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void updateSmartDashboard() {
-		SmartDashboard.putBoolean("High Gear", driveTrainShifters[0].get() == Value.kForward ? true : false);
+		SmartDashboard.putBoolean("High Gear", driveTrainShifters.get() == Value.kForward ? true : false);
 		SmartDashboard.putBoolean("Auto Shifting", !RobotMap.manualShiftOverride);
-		SmartDashboard.putNumber("DT Left Encoder", leftMotors[0].get());
-		SmartDashboard.putNumber("DT Right Encoder", rightMotors[0].get());
+		SmartDashboard.putNumber("DT Left Value", leftMotors[0].get());
+		SmartDashboard.putNumber("DT Right Value", rightMotors[0].get());
 	}
 	
 	public void initDefaultCommand() {

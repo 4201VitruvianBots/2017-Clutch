@@ -50,18 +50,24 @@ public class OI {
 		rightJoystick = new Joystick(1);
 		xBoxController = new Joystick(2);
 		
-		for(int i = 1; i < leftButtons.length; i++)
-			leftButtons[i] = new JoystickButton(leftJoystick, i);
-		for(int i = 1; i < rightButtons.length; i++)
-			rightButtons[i] = new JoystickButton(rightJoystick, i);
-		for(int i = 1; i < xBoxButtons.length; i++)
-			xBoxButtons[i] = new JoystickButton(xBoxController, i);
-		
-		leftButtons[6].whenPressed(new ToggleDriveShift());
+		for(int i = 0; i < leftButtons.length; i++)
+			leftButtons[i] = new JoystickButton(leftJoystick, (i + 1));
+		for(int i = 0; i < rightButtons.length; i++)
+			rightButtons[i] = new JoystickButton(rightJoystick, (i + 1));
+		for(int i = 0; i < xBoxButtons.length; i++)
+			xBoxButtons[i] = new JoystickButton(xBoxController, (i + 1));
+
+		//leftButtons[0].whenPressed(); // Toggle Conveyor+Uptake
+		leftButtons[6].whenPressed(new ToggleDriveShift());			// Physical Button Broken
 		
 		rightButtons[0].whenPressed(new ToggleAutoDriveShift());
-		rightButtons[1].whenPressed(new ToggleHopperWall());
-		
-		xBoxButtons[0].whenPressed(new OpenGearClamps());
+		rightButtons[1].whenPressed(new ToggleHopperWall());		// Not working
+		rightButtons[4].whenPressed(new DeployGroundGearIntake());	// Not working
+		rightButtons[6].whenPressed(new RetractGroundGearIntake());	// Not working
+
+		xBoxButtons[0].whileHeld(new CloseGearClamps());			// Moving Hopper Wall
+		xBoxButtons[1].whileHeld(new OpenGearClamps());				// Moving Hopper Wall
+		//xBoxButtons[4].whenPressed(); // Climber Motors
+		//xBoxButtons[5].whileHeld(); // Intake Balls
 	}
 }

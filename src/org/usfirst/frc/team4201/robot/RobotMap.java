@@ -19,7 +19,7 @@ public class RobotMap {
 	
 	public static boolean manualShiftOverride = true;
 	
-	public static final int driveTrainMotorLeftFront	= 8;
+	public static final int driveTrainMotorLeftFront = 8;
 	public static final int driveTrainMotorLeftRear = 9;
 	public static final int driveTrainMotorRightFront = 6;
 	public static final int driveTrainMotorRightRear = 7;
@@ -30,18 +30,21 @@ public class RobotMap {
 	public static final int PCMOne = 21;
 	
 	// Double Solenoids (?)
-	public static final int driveTrainShifterLeft = 0;
-	public static final int driveTrainShifterRight = 1;
+	public static final int driveTrainShifterForward = 1;
+	public static final int driveTrainShifterReverse = 0;
 	
-	public static final int gearIntakePistonOne = 2;
-	public static final int gearIntakePistonTwo = 3;
+	//public static final int gearIntakePistonForward = 3;	// Doesn't do anything
+	//public static final int gearIntakePistonReverse = 2; 	// Doesn't do anything
 	
-	public static final int gearClampPistionOne = 6;
-	public static final int gearClampPistionTwo = 7;
+	public static final int gearClampPistionForward = 6;	// This is controlling the hopper wall
+	public static final int gearClampPistionReverse = 7;
 	
 	// Single Solenoids
-	public static final int gearFunnelPiston = 3;
+	public static final int intakePistons = 2;		// Not working
+	public static final int gearFunnelPiston = 3; // Spoiler Deploy
+	// public static final int climberDeploy = 4;
 	
-	public static final int hopperWall = 5;
+	// Ball spoiler (?)
+	public static final int hopperWall = 5;	// This is controlling the groundGearIntake
 	
 }

@@ -8,8 +8,8 @@ import org.usfirst.frc.team4201.robot.Robot;
 /**
  *
  */
-public class CloseGearClamp extends Command {
-	public CloseGearClamp() {
+public class CloseGearClamps extends Command {
+	public CloseGearClamps() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.groundGearIntake);
 	}
@@ -29,7 +29,7 @@ public class CloseGearClamp extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true

@@ -7,6 +7,7 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,14 +22,9 @@ public class GroundGearIntake extends Subsystem {
 		new CANTalon(RobotMap.intakeMotorLeft),
 		new CANTalon(RobotMap.intakeMotorRight)	
 	};
-	DoubleSolenoid[] gearIntakePistons = {
-		new DoubleSolenoid(RobotMap.PCMOne, RobotMap.gearIntakePistonOne),
-		new DoubleSolenoid(RobotMap.PCMOne, RobotMap.gearIntakePistonTwo)
-	};
-	DoubleSolenoid[] gearClampPistons = {
-		new DoubleSolenoid(RobotMap.PCMOne, RobotMap.gearClampPistionOne),
-		new DoubleSolenoid(RobotMap.PCMOne, RobotMap.gearClampPistionTwo)
-	};
+	//DoubleSolenoid gearIntakePistons = new DoubleSolenoid(RobotMap.PCMOne, RobotMap.gearIntakePistonForward, RobotMap.gearIntakePistonReverse);
+	DoubleSolenoid gearClampPistons = new DoubleSolenoid(RobotMap.PCMOne, RobotMap.gearClampPistionForward, RobotMap.gearClampPistionReverse);
+	Solenoid gearIntakePistons = new Solenoid(RobotMap.PCMOne, RobotMap.intakePistons);
 	
 	public GroundGearIntake() {
 		super();
@@ -37,17 +33,15 @@ public class GroundGearIntake extends Subsystem {
 	}
 	
 	public void deployIntake() {
-		gearIntakePistons[0].set(Value.kForward);
-		gearIntakePistons[1].set(Value.kForward);
+		gearIntakePistons.set(true);
 	}
 	
 	public void retractIntake() {
-		gearIntakePistons[0].set(Value.kReverse);
-		gearIntakePistons[1].set(Value.kReverse);
+		gearIntakePistons.set(false);
 	}
 	
-	public Value getIntakeStatus() {
-		return gearIntakePistons[0].get();
+	public Boolean getIntakeStatus() {
+		return gearIntakePistons.get();
 	}
 	
 	public void activateGearIntakeMotors() {
@@ -66,21 +60,20 @@ public class GroundGearIntake extends Subsystem {
 	}
 	
 	public void openGearClamp() {
-		gearClampPistons[0].set(Value.kForward);
-		gearClampPistons[1].set(Value.kForward);
+		gearClampPistons.set(Value.kForward);
 	}
 
 	public void closeGearClamp() {
-		gearClampPistons[0].set(Value.kReverse);
-		gearClampPistons[1].set(Value.kReverse);
+		gearClampPistons.set(Value.kReverse);
 	}
 	
 	public Value getIntakeClampStatus() {
-		return gearClampPistons[0].get();
+		return gearClampPistons.get();
 	}
 	
 	public void updateSmartDashboard() {
-		SmartDashboard.putBoolean("Intake Deployed", getIntakeStatus() == Value.kForward ? true : false);
+		//SmartDashboard.putBoolean("Intake Deployed", getIntakeStatus() == Value.kForward ? true : false);
+		SmartDashboard.putBoolean("Intake Deployed", getIntakeStatus());
 		SmartDashboard.putBoolean("Gear Clamps Open", getIntakeClampStatus() == Value.kForward ? true : false);
 	}
 	

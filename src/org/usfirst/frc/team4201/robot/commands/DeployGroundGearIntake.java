@@ -17,7 +17,9 @@ public class DeployGroundGearIntake extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		if(Robot.groundGearIntake.getIntakeStatus() != DoubleSolenoid.Value.kForward)
+		//if(Robot.groundGearIntake.getIntakeStatus() != DoubleSolenoid.Value.kForward)
+		//	Robot.groundGearIntake.deployIntake();
+		if(!Robot.groundGearIntake.getIntakeStatus())
 			Robot.groundGearIntake.deployIntake();
 	}
 
@@ -29,7 +31,7 @@ public class DeployGroundGearIntake extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true

@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team4201.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -40,12 +41,15 @@ public class Robot extends IterativeRobot {
 		hopper = new Hopper();
 		groundGearIntake = new GroundGearIntake();
 		oi = new OI();
+		
+		CameraServer.getInstance().startAutomaticCapture();
+		
 		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Automous Routines", autoMode);
 		
 		driveMode.addDefault("Split Arcade", new SetSplitArcade());
-		driveMode.addDefault("Tank Drive", new SetTankDrive());
+		driveMode.addObject("Tank Drive", new SetTankDrive());
 		SmartDashboard.putData("Drive Type", driveMode);
 	}
 
