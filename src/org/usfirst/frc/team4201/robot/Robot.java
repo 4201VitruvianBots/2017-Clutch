@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot {
 		groundGearIntake = new GroundGearIntake();
 		oi = new OI();
 		
-		CameraServer.getInstance().startAutomaticCapture();
+		CameraServer.getInstance().startAutomaticCapture();	
 		
 		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());

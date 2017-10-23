@@ -58,7 +58,7 @@ public class OI {
 			xBoxButtons[i] = new JoystickButton(xBoxController, (i + 1));
 
 		//leftButtons[0].whenPressed(); // Toggle Conveyor+Uptake
-		leftButtons[6].whenPressed(new ToggleDriveShift());			// Physical Button Broken
+		leftButtons[5].whenPressed(new ToggleDriveShift());			// Physical Button Broken
 		
 		rightButtons[0].whenPressed(new ToggleAutoDriveShift());
 		rightButtons[1].whenPressed(new ToggleHopperWall());		// Not working

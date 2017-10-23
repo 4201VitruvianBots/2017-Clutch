@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4201.robot.subsystems;
 
+import org.usfirst.frc.team4201.robot.Robot;
 import org.usfirst.frc.team4201.robot.RobotMap;
 import org.usfirst.frc.team4201.robot.commands.SetSplitArcade;
 
@@ -74,9 +75,9 @@ public class DriveTrain extends Subsystem {
 	
 	public void splitArcadeDrive(Joystick leftJoystick, Joystick rightJoystick) {
 		initDriverControl();
-        
-        // Set split Arcade Drive with squared inputs
-    	robotDrive.arcadeDrive(leftJoystick.getAxis(AxisType.kY), rightJoystick.getAxis(AxisType.kX), true); 
+		
+        // Set split Arcade Drive with cubed inputs
+    	robotDrive.arcadeDrive(Math.pow(leftJoystick.getAxis(AxisType.kY), 3), Math.pow(-rightJoystick.getAxis(AxisType.kX), 3)); 
 	}
 	
 	public void setHighGear() {
@@ -111,6 +112,10 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putBoolean("Auto Shifting", !RobotMap.manualShiftOverride);
 		SmartDashboard.putNumber("DT Left Value", leftMotors[0].get());
 		SmartDashboard.putNumber("DT Right Value", rightMotors[0].get());
+		SmartDashboard.putNumber("1X", Robot.oi.leftJoystick.getAxis(AxisType.kX));
+		SmartDashboard.putNumber("1Y", Robot.oi.leftJoystick.getAxis(AxisType.kY));
+		SmartDashboard.putNumber("2X", Robot.oi.rightJoystick.getAxis(AxisType.kX));
+		SmartDashboard.putNumber("2Y", Robot.oi.rightJoystick.getAxis(AxisType.kY));
 	}
 	
 	public void initDefaultCommand() {
