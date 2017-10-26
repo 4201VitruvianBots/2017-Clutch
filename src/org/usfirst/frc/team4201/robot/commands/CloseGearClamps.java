@@ -17,8 +17,7 @@ public class CloseGearClamps extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		if(Robot.groundGearIntake.getIntakeClampStatus() != DoubleSolenoid.Value.kReverse)
-			Robot.groundGearIntake.closeGearClamp();
+		Robot.groundGearIntake.closeGearClamp();
 	}
 
 	// Called repeatedly when this Command is scheduled to run

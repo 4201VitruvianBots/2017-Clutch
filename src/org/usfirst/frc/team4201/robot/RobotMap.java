@@ -24,8 +24,15 @@ public class RobotMap {
 	public static final int driveTrainMotorRightFront = 6;
 	public static final int driveTrainMotorRightRear = 7;
 	
-	public static final int intakeMotorLeft = 11;
-	public static final int intakeMotorRight = 0;
+	public static final int gearIntakeMotor = 0;
+	public static final int ballIntakeMotor = 11;	
+	
+	public static final int conveyorMotor = 10;
+	public static final int shooterUptake = 4;	// Master to CANTalon 4?
+	
+	public static final int flywheelMaster = 5; // This is controlling the uptake
+	public static final int flywheelSlave = 1; // Following CANTalon 1
+	
 	
 	public static final int PCMOne = 21;
 	
@@ -33,18 +40,12 @@ public class RobotMap {
 	public static final int driveTrainShifterForward = 1;
 	public static final int driveTrainShifterReverse = 0;
 	
-	//public static final int gearIntakePistonForward = 3;	// Doesn't do anything
-	//public static final int gearIntakePistonReverse = 2; 	// Doesn't do anything
+	public static final int gearClampPistionForward = 4;
+	public static final int gearClampPistionReverse = 5;
 	
-	public static final int gearClampPistionForward = 6;	// This is controlling the hopper wall
-	public static final int gearClampPistionReverse = 7;
+	public static final int gearIntakePistonForward = 3;
+	public static final int gearIntakePistonReverse = 2;
 	
-	// Single Solenoids
-	public static final int intakePistons = 2;		// Not working
-	public static final int gearFunnelPiston = 3; // Spoiler Deploy
-	// public static final int climberDeploy = 4;
-	
-	// Ball spoiler (?)
-	public static final int hopperWall = 5;	// This is controlling the groundGearIntake
-	
+	public static final int hopperWallForward = 7;
+	public static final int hopperWallReverse = 6;
 }

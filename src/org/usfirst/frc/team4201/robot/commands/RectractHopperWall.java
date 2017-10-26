@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4201.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team4201.robot.Robot;
@@ -16,7 +17,7 @@ public class RectractHopperWall extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		if(Robot.hopper.getHopperStatus())
+		if(Robot.hopper.getHopperStatus() == Value.kForward)
 			Robot.hopper.hopperRetract();
 	}
 

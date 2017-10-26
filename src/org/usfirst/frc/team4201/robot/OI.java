@@ -57,17 +57,18 @@ public class OI {
 		for(int i = 0; i < xBoxButtons.length; i++)
 			xBoxButtons[i] = new JoystickButton(xBoxController, (i + 1));
 
-		//leftButtons[0].whenPressed(); // Toggle Conveyor+Uptake
-		leftButtons[5].whenPressed(new ToggleDriveShift());			// Physical Button Broken
+		leftButtons[0].whenPressed(new ToggleConveyorUptake()); // Flywheel + Conveyor
+		leftButtons[5].whenPressed(new ToggleDriveShift());		
 		
 		rightButtons[0].whenPressed(new ToggleAutoDriveShift());
-		rightButtons[1].whenPressed(new ToggleHopperWall());		// Not working
-		rightButtons[4].whenPressed(new DeployGroundGearIntake());	// Not working
-		rightButtons[6].whenPressed(new RetractGroundGearIntake());	// Not working
+		rightButtons[1].whenPressed(new ToggleHopperWall());		
+		rightButtons[2].whenPressed(new IntakeUp());
+		rightButtons[4].whenPressed(new IntakeDown());	
 
-		xBoxButtons[0].whileHeld(new CloseGearClamps());			// Moving Hopper Wall
-		xBoxButtons[1].whileHeld(new OpenGearClamps());				// Moving Hopper Wall
-		//xBoxButtons[4].whenPressed(); // Climber Motors
-		//xBoxButtons[5].whileHeld(); // Intake Balls
+		xBoxButtons[0].whenPressed(new IntakeDown());	
+		xBoxButtons[1].whenPressed(new IntakeUp());		
+		xBoxButtons[2].whenPressed(new ToggleFlywheel(8320)); // Uptake + Flywheel
+		xBoxButtons[3].whenPressed(new MotorTest(5)); //1: Flywheel, 10: Conveyor, 4: Uptake, 5 : Flywheel + Uptake
+		xBoxButtons[5].whenPressed(new ToggleBallIntake());
 	}
 }

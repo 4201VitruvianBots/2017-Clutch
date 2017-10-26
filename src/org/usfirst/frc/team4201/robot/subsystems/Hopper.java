@@ -2,7 +2,9 @@ package org.usfirst.frc.team4201.robot.subsystems;
 
 import org.usfirst.frc.team4201.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -11,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Hopper extends Subsystem {
 	// Check if hopper wall is single or double
-	Solenoid hopperWall = new Solenoid(RobotMap.PCMOne, RobotMap.hopperWall);
+	DoubleSolenoid hopperWall = new DoubleSolenoid(RobotMap.PCMOne, RobotMap.hopperWallForward, RobotMap.hopperWallReverse);
 	
 	public Hopper() {
 		super();
@@ -19,19 +21,19 @@ public class Hopper extends Subsystem {
 	}
 	
 	public void hopperExtend() {
-		hopperWall.set(true);
+		hopperWall.set(Value.kForward);
 	}
 	
 	public void hopperRetract() {
-		hopperWall.set(false);
+		hopperWall.set(Value.kReverse);
 	}
 	
-	public Boolean getHopperStatus() {
+	public Value getHopperStatus() {
 		return hopperWall.get();
 	}
 	
 	public void updateSmartDashboard() {
-		SmartDashboard.putBoolean("Hopper Wall Status", getHopperStatus());
+		SmartDashboard.putBoolean("Hopper Wall Status", getHopperStatus() == Value.kForward ? true : false);
 	}
 	
     public void initDefaultCommand() {

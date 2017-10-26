@@ -17,14 +17,12 @@ public class OpenGearClamps extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		if(Robot.groundGearIntake.getIntakeClampStatus() != DoubleSolenoid.Value.kForward)
-			Robot.groundGearIntake.openGearClamp();
+		Robot.groundGearIntake.openGearClamp();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.groundGearIntake.activateGearIntakeMotors();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -36,7 +34,6 @@ public class OpenGearClamps extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.groundGearIntake.deactivateGearIntakeMotors();
 	}
 
 	// Called when another command which requires one or more of the same

@@ -3,6 +3,7 @@ package org.usfirst.frc.team4201.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -24,13 +25,14 @@ public class Robot extends IterativeRobot {
 	public static DriveTrain driveTrain;
 	public static Hopper hopper;
 	public static GroundGearIntake groundGearIntake;
+	public static Shooter shooter;
 	public static OI oi;
 
 	Command autonomousCommand;
 	Command teleOpDrive;
 	SendableChooser<Command> autoMode = new SendableChooser<>();
 	SendableChooser<Command> driveMode = new SendableChooser<>();
-
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -40,6 +42,7 @@ public class Robot extends IterativeRobot {
 		driveTrain = new DriveTrain();
 		hopper = new Hopper();
 		groundGearIntake = new GroundGearIntake();
+		shooter = new Shooter();
 		oi = new OI();
 		
 		CameraServer.getInstance().startAutomaticCapture();	
@@ -118,7 +121,7 @@ public class Robot extends IterativeRobot {
 			teleOpDrive.start();
 		
 		// Deploy Hopper Wall if undeployed
-		if(!hopper.getHopperStatus()) {
+		if(hopper.getHopperStatus() != Value.kForward) {
 			Command deployHopper = new ExtendHopperWall();
 			deployHopper.start();
 		}
@@ -133,6 +136,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.updateSmartDashboard();
 		hopper.updateSmartDashboard();
 		groundGearIntake.updateSmartDashboard();
+		shooter.updateSmartDashboard();
 	}
 
 	/**

@@ -18,45 +18,38 @@ public class GroundGearIntake extends Subsystem {
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	CANTalon[] intakeMotors = {
-		new CANTalon(RobotMap.intakeMotorLeft),
-		new CANTalon(RobotMap.intakeMotorRight)	
-	};
+	CANTalon intakeMotor = new CANTalon(RobotMap.gearIntakeMotor);
 	//DoubleSolenoid gearIntakePistons = new DoubleSolenoid(RobotMap.PCMOne, RobotMap.gearIntakePistonForward, RobotMap.gearIntakePistonReverse);
 	DoubleSolenoid gearClampPistons = new DoubleSolenoid(RobotMap.PCMOne, RobotMap.gearClampPistionForward, RobotMap.gearClampPistionReverse);
-	Solenoid gearIntakePistons = new Solenoid(RobotMap.PCMOne, RobotMap.intakePistons);
+	DoubleSolenoid gearIntakePistons = new DoubleSolenoid(RobotMap.PCMOne, RobotMap.gearIntakePistonForward, RobotMap.gearIntakePistonReverse);
 	
 	public GroundGearIntake() {
 		super();
-		intakeMotors[0].changeControlMode(TalonControlMode.PercentVbus);
-		intakeMotors[1].changeControlMode(TalonControlMode.PercentVbus);
+		intakeMotor.changeControlMode(TalonControlMode.PercentVbus);
 	}
 	
 	public void deployIntake() {
-		gearIntakePistons.set(true);
+		gearIntakePistons.set(Value.kForward);
 	}
 	
 	public void retractIntake() {
-		gearIntakePistons.set(false);
+		gearIntakePistons.set(Value.kReverse);
 	}
 	
-	public Boolean getIntakeStatus() {
+	public Value getIntakeStatus() {
 		return gearIntakePistons.get();
 	}
 	
 	public void activateGearIntakeMotors() {
-		intakeMotors[0].set(1);
-		intakeMotors[1].set(-1);
+		intakeMotor.set(-0.8);
 	}
 	
 	public void deactivateGearIntakeMotors() {
-		intakeMotors[0].set(0);
-		intakeMotors[1].set(0);
+		intakeMotor.set(0);
 	}
 	
 	public void reverseGearIntakeMotors() {
-		intakeMotors[0].set(-1);
-		intakeMotors[1].set(1);
+		intakeMotor.set(0.8);
 	}
 	
 	public void openGearClamp() {
@@ -73,7 +66,7 @@ public class GroundGearIntake extends Subsystem {
 	
 	public void updateSmartDashboard() {
 		//SmartDashboard.putBoolean("Intake Deployed", getIntakeStatus() == Value.kForward ? true : false);
-		SmartDashboard.putBoolean("Intake Deployed", getIntakeStatus());
+		SmartDashboard.putBoolean("Intake Deployed", getIntakeStatus() == Value.kForward ? true : false);
 		SmartDashboard.putBoolean("Gear Clamps Open", getIntakeClampStatus() == Value.kForward ? true : false);
 	}
 	
