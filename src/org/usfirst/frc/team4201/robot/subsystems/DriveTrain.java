@@ -37,7 +37,7 @@ public class DriveTrain extends Subsystem {
 	
 	public DriveTrain() {
 		super();
-
+		
 		leftMotors[0].changeControlMode(TalonControlMode.PercentVbus);
 		leftMotors[1].changeControlMode(TalonControlMode.Follower);
 		leftMotors[1].set(leftMotors[0].getDeviceID());
@@ -55,9 +55,7 @@ public class DriveTrain extends Subsystem {
         
         // Set Control Mode to ensure proper control mode
 		leftMotors[0].changeControlMode(TalonControlMode.PercentVbus);
-		leftMotors[1].changeControlMode(TalonControlMode.PercentVbus);
         rightMotors[0].changeControlMode(TalonControlMode.PercentVbus);
-        rightMotors[1].changeControlMode(TalonControlMode.PercentVbus);
 		
         // Ensure motors are not inverted
         robotDrive.setInvertedMotor(MotorType.kFrontLeft, false);
