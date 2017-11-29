@@ -8,36 +8,41 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveStraightWithGyro extends Command {
-	double timeout, speed;
+public class DriveTurnWithGyro extends Command {
+	double timeout, speed, turn;
 	Timer stopwatch;
-	double kP = 0.03;
+	double kP = 0.03, angle = 0;
 	
-    public DriveStraightWithGyro(double time, double speed) {
+    public DriveTurnWithGyro(double time, double speed, double turn) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
         requires(Robot.utilities);
         
         this.timeout = time;
+        this.turn = turn;
         this.speed = speed;
         stopwatch = new Timer();
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	stopwatch.start();
+    	//stopwatch.start();
     	Robot.utilities.XRSGyro.reset();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double angle = Robot.utilities.XRSGyro.getAngle();
-    	Robot.driveTrain.drive(-speed, angle*kP);	//check sign to make sure it continues to drive straight
+    	Robot.driveTrain.drive(-speed, (angle+turn)*kP);	//check sign to make sure it continues to drive straight
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return stopwatch.get() > timeout;
+    	if(angle == turn) {
+    		stopwatch.start();
+    		return stopwatch.get() > timeout;
+    	}
+    	return false;
     }
 
     // Called once after isFinished returns true

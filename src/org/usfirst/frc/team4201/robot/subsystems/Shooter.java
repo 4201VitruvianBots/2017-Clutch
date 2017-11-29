@@ -34,6 +34,7 @@ public class Shooter extends Subsystem {
 		shooter[0].setP(0.4);
 		shooter[1].changeControlMode(TalonControlMode.Follower);
 		shooter[1].set(shooter[0].getDeviceID());
+		conveyor.setInverted(true); // Tested: This makes it move in the correct direction
 	}
 	
 	public void enableBallIntake(){
