@@ -10,10 +10,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Utilities extends Subsystem{
 	
-	ADXRS450_Gyro XRSGyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
-			
+	public ADXRS450_Gyro XRSGyro;
+	
 	public Utilities(){
 		super();
+		XRSGyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+		
 	}
 	
 	public void updateSmartDashboard(){

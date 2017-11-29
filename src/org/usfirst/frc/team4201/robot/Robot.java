@@ -26,11 +26,12 @@ public class Robot extends IterativeRobot {
 	public static Hopper hopper;
 	public static GroundGearIntake groundGearIntake;
 	public static Shooter shooter;
+	public static Utilities utilities;
 	public static OI oi;
 
 	Command autonomousCommand;
 	Command teleOpDrive;
-	SendableChooser<Command> autoMode = new SendableChooser<>();
+	SendableChooser<Command> autoModes = new SendableChooser<>();
 	SendableChooser<Command> driveMode = new SendableChooser<>();
 	
 	/**
@@ -43,16 +44,18 @@ public class Robot extends IterativeRobot {
 		hopper = new Hopper();
 		groundGearIntake = new GroundGearIntake();
 		shooter = new Shooter();
+		utilities = new Utilities();
 		oi = new OI();
 		
 		CameraServer.getInstance().startAutomaticCapture();	
 		
-		//chooser.addDefault("Default Auto", new ExampleCommand());
+		autoModes.addDefault("Default Auto", new AutoDriveStraight());
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Automous Routines", autoMode);
+		SmartDashboard.putData("Automous Routines", autoModes);
 		
 		driveMode.addDefault("Split Arcade", new SetSplitArcade());
 		driveMode.addObject("Tank Drive", new SetTankDrive());
+		driveMode.addObject("Cheesy Drive", new SetCheesyDrive());
 		SmartDashboard.putData("Drive Type", driveMode);
 	}
 
@@ -84,7 +87,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = autoMode.getSelected();
+		autonomousCommand = autoModes.getSelected();
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -104,6 +107,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		utilities.updateSmartDashboard();
 	}
 
 	@Override
@@ -137,6 +141,7 @@ public class Robot extends IterativeRobot {
 		hopper.updateSmartDashboard();
 		groundGearIntake.updateSmartDashboard();
 		shooter.updateSmartDashboard();
+		utilities.updateSmartDashboard();
 	}
 
 	/**

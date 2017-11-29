@@ -1,7 +1,5 @@
 package org.usfirst.frc.team4201.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team4201.robot.Robot;
@@ -9,8 +7,8 @@ import org.usfirst.frc.team4201.robot.Robot;
 /**
  *
  */
-public class SetDriveHighGear extends Command {
-	public SetDriveHighGear() {
+public class SetCheesyDrive extends Command {
+	public SetCheesyDrive() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.driveTrain);
 	}
@@ -18,19 +16,19 @@ public class SetDriveHighGear extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		if(Robot.driveTrain.getShiftStatus() != Value.kForward)
-			Robot.driveTrain.setHighGear();
+		Robot.driveTrain.setLowGear();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+    	Robot.driveTrain.cheesyDrive(Robot.oi.leftJoystick, Robot.oi.rightJoystick);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true

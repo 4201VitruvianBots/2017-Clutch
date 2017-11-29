@@ -17,7 +17,7 @@ public class RectractHopperWall extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		if(Robot.hopper.getHopperStatus() == Value.kForward)
+		if(Robot.hopper.getHopperStatus() != Value.kReverse)
 			Robot.hopper.hopperRetract();
 	}
 

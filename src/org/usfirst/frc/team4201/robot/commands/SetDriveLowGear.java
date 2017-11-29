@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4201.robot.commands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team4201.robot.Robot;
@@ -17,10 +18,8 @@ public class SetDriveLowGear extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		if(Robot.driveTrain.getShiftStatus() != DoubleSolenoid.Value.kReverse)
+		if(Robot.driveTrain.getShiftStatus() != Value.kReverse)
 			Robot.driveTrain.setLowGear();
-		else if(Robot.driveTrain.getShiftStatus() != DoubleSolenoid.Value.kForward)
-			Robot.driveTrain.setHighGear();
 	}
 
 	// Called repeatedly when this Command is scheduled to run

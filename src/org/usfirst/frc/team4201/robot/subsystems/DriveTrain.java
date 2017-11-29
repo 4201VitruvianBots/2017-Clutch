@@ -6,6 +6,8 @@ import org.usfirst.frc.team4201.robot.commands.SetSplitArcade;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
+import com.team254.frc2016.CheesyDriveHelper;
+import com.team254.lib.util.DriveSignal;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -30,6 +32,9 @@ public class DriveTrain extends Subsystem {
 	};
 	RobotDrive robotDrive = new RobotDrive(leftMotors[0], leftMotors[1], rightMotors[0], rightMotors[1]);
 	
+	CheesyDriveHelper cheesyDrive = new CheesyDriveHelper();
+	public DriveSignal signal = new DriveSignal(0, 0);
+	
 	DoubleSolenoid driveTrainShifters = new DoubleSolenoid(RobotMap.PCMOne, RobotMap.driveTrainShifterForward, RobotMap.driveTrainShifterReverse);
 	
 	double upperShiftThreshold = 12;
@@ -47,11 +52,6 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	void initDriverControl() {
-		// Clear sticky faults to avoid errors
-		leftMotors[0].clearStickyFaults();
-		leftMotors[1].clearStickyFaults();
-        rightMotors[0].clearStickyFaults();
-        rightMotors[1].clearStickyFaults();
         
         // Set Control Mode to ensure proper control mode
 		leftMotors[0].changeControlMode(TalonControlMode.PercentVbus);
@@ -68,7 +68,7 @@ public class DriveTrain extends Subsystem {
 		initDriverControl();
         
         // Set Tank Drive with cubed inputs. I don't know why the left/right joysticks are reversed
-    	robotDrive.tankDrive(Math.pow(rightJoystick.getAxis(AxisType.kY), 3), Math.pow(leftJoystick.getAxis(AxisType.kY), 3));
+    	robotDrive.tankDrive(rightJoystick.getAxis(AxisType.kY), leftJoystick.getAxis(AxisType.kY), true);
 	}
 	
 	public void splitArcadeDrive(Joystick leftJoystick, Joystick rightJoystick) {
@@ -76,6 +76,23 @@ public class DriveTrain extends Subsystem {
 		
         // Set split Arcade Drive with cubed inputs
     	robotDrive.arcadeDrive(Math.pow(leftJoystick.getAxis(AxisType.kY), 3), Math.pow(-rightJoystick.getAxis(AxisType.kX), 3)); 
+	}
+	
+	public void cheesyDrive(Joystick leftJoystick, Joystick rightJoystick) {
+        // Set Control Mode to ensure proper control mode
+		leftMotors[0].changeControlMode(TalonControlMode.PercentVbus);
+        rightMotors[0].changeControlMode(TalonControlMode.PercentVbus);
+		
+        // Ensure motors are not inverted
+        robotDrive.setInvertedMotor(MotorType.kFrontLeft, false);
+        robotDrive.setInvertedMotor(MotorType.kRearLeft, false);
+        robotDrive.setInvertedMotor(MotorType.kFrontRight, true);	// ???
+        robotDrive.setInvertedMotor(MotorType.kRearRight, true);	// ???
+        
+        signal = cheesyDrive.cheesyDrive(leftJoystick.getY(), rightJoystick.getX(), RobotMap.cheesyDriveBrakeMode);
+        
+		leftMotors[0].set(signal.leftMotor);
+		rightMotors[0].set(signal.rightMotor);
 	}
 	
 	public void setHighGear() {
@@ -103,6 +120,10 @@ public class DriveTrain extends Subsystem {
 				setHighGear();
 			else if(encoderValue < lowerShiftThreshold)
 				setLowGear();
+	}
+	
+	public void drive(double speed, double curve){
+		robotDrive.drive(speed, curve);
 	}
 	
 	public void updateSmartDashboard() {

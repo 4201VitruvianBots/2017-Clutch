@@ -58,7 +58,9 @@ public class OI {
 			xBoxButtons[i] = new JoystickButton(xBoxController, (i + 1));
 
 		leftButtons[0].whenPressed(new ToggleConveyorUptake()); // Flywheel + Conveyor
-		leftButtons[5].whenPressed(new ToggleDriveShift());		
+		leftButtons[3].whenPressed(new SetDriveHighGear());		
+		leftButtons[5].whenPressed(new SetDriveLowGear());		
+		leftButtons[4].whenPressed(new ToggleDriveShift());		// [5]
 		
 		rightButtons[0].whenPressed(new ToggleAutoDriveShift());
 		rightButtons[1].whenPressed(new ToggleHopperWall());		
