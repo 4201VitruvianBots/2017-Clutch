@@ -4,22 +4,23 @@ import org.usfirst.frc.team4201.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class DriveTurnWithGyro extends Command {
-	double timeout, speed, turn;
+	double speed, setpoint;
 	Timer stopwatch;
-	double kP = 0.03, angle = 0;
+	double kP = 0.1, kI = 0.0001, angleGet = 0, error = 0, output = 0;
+	boolean lock = false;
 	
-    public DriveTurnWithGyro(double time, double speed, double turn) {
+    public DriveTurnWithGyro(double speed, double turn) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
         requires(Robot.utilities);
         
-        this.timeout = time;
-        this.turn = turn;
+        this.setpoint = turn;
         this.speed = speed;
         stopwatch = new Timer();
     }
@@ -32,21 +33,34 @@ public class DriveTurnWithGyro extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double angle = Robot.utilities.XRSGyro.getAngle();
-    	Robot.driveTrain.drive(-speed, (angle+turn)*kP);	//check sign to make sure it continues to drive straight
+    	angleGet = Robot.utilities.XRSGyro.getAngle();
+    	
+    	error = setpoint - angleGet;
+    	output = error*kP;
+    	Robot.driveTrain.drive(-speed, output);	//check sign to make sure it continues to drive straight
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(angle == turn) {
+    	SmartDashboard.putNumber("Angle Delta: ", Math.abs(setpoint - angleGet));
+    	SmartDashboard.putNumber("Stopwatch", stopwatch.get());
+    	SmartDashboard.putBoolean("Lock Value: ", lock);
+    	
+    	if(Math.abs(setpoint - angleGet) < 0.1 && !lock) { // When you are in range && you are not locked
     		stopwatch.start();
-    		return stopwatch.get() > timeout;
+    		lock = true;
+    	} else if(Math.abs(setpoint - angleGet) >= 0.1 && lock){ // When you are outside of range && you are locked
+    		stopwatch.stop();
+    		stopwatch.reset();
+    		lock = false;
     	}
-    	return false;
+    	
+    	return stopwatch.get() > 1000;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	stopwatch.stop();
     	Robot.driveTrain.drive(0, 0);
     }
 

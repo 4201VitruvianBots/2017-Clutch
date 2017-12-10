@@ -122,8 +122,11 @@ public class DriveTrain extends Subsystem {
 				setLowGear();
 	}
 	
-	public void drive(double speed, double curve){
-		robotDrive.drive(speed, curve);
+	public void drive(double throttle, double angularPower){
+		double rightPwm = throttle - angularPower;
+        double leftPwm = throttle + angularPower;
+        
+		robotDrive.tankDrive(leftPwm, rightPwm);
 	}
 	
 	public void updateSmartDashboard() {
