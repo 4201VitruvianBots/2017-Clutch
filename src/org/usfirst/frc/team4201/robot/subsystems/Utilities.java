@@ -1,10 +1,8 @@
 package org.usfirst.frc.team4201.robot.subsystems;
 
-import org.usfirst.frc.team4201.robot.Robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
