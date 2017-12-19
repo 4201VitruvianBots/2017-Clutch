@@ -12,12 +12,12 @@ public class Utilities extends Subsystem{
 	
 	public Utilities(){
 		super();
-		XRSGyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+		//XRSGyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
 		
 	}
 	
 	public void updateSmartDashboard(){
-		SmartDashboard.putNumber("XRS Gyro", XRSGyro.getAngle());
+		//SmartDashboard.putNumber("XRS Gyro", XRSGyro.getAngle());
 	}
 	
 	@Override

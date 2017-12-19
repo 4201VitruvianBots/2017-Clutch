@@ -49,6 +49,11 @@ public class DriveTrain extends Subsystem {
         rightMotors[0].changeControlMode(TalonControlMode.PercentVbus);
         rightMotors[1].changeControlMode(TalonControlMode.Follower);
         rightMotors[1].set(rightMotors[0].getDeviceID());
+        
+        leftMotors[0].configPeakOutputVoltage(+12.0f, -12.0f);
+        leftMotors[1].configPeakOutputVoltage(+12.0f, -12.0f);
+        rightMotors[0].configPeakOutputVoltage(+12.0f, -12.0f);
+        rightMotors[1].configPeakOutputVoltage(+12.0f, -12.0f);
 	}
 	
 	void initDriverControl() {
@@ -125,6 +130,20 @@ public class DriveTrain extends Subsystem {
 	public void drive(double throttle, double angularPower){
 		double rightPwm = throttle - angularPower;
         double leftPwm = throttle + angularPower;
+        
+        if(rightPwm > 1.0){
+        	leftPwm -= (rightPwm - 1.0);
+        	rightPwm = 1.0;
+        } else if(rightPwm < -1.0){
+        	leftPwm += (-rightPwm - 1.0);
+        	rightPwm = -1.0;
+        } else if(leftPwm > 1.0){
+        	rightPwm -= (leftPwm - 1.0);
+        	leftPwm = 1.0;
+        } else if(leftPwm < -1){
+        	rightPwm += (-leftPwm - 1.0);
+        	leftPwm = -1.0;
+        }
         
 		robotDrive.tankDrive(leftPwm, rightPwm);
 	}

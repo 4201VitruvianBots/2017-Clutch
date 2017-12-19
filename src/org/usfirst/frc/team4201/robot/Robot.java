@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
 		
 		CameraServer.getInstance().startAutomaticCapture();	
 		
-		autoModes.addDefault("Default Auto", new DriveTurnWithGyro(0, -90));
+		//autoModes.addDefault("Default Auto", new AlignToVisionTarget());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Automous Routines", autoModes);
 		

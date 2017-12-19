@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="org/usfirst/frc/team4201/robot/commands/AlignToVisionTarget.java|org/usfirst/frc/team4201/robot/commands/DriveStraightWithGyro.java|org/usfirst/frc/team4201/robot/commands/DriveTurnWithGyro.java|org/usfirst/frc/team4201/robot/commands/DriveTurnWithGyroPID.java|org/usfirst/frc/team4201/robot/commands/AutoRightTurn.java|org/usfirst/frc/team4201/robot/commands/AutoDriveStraight.java" kind="src" path="src"/>
 	<classpathentry kind="var" path="wpilib" sourcepath="wpilib.sources"/>
 	<classpathentry kind="var" path="networktables" sourcepath="networktables.sources"/>
 	<classpathentry kind="var" path="opencv" sourcepath="opencv.sources"/>
